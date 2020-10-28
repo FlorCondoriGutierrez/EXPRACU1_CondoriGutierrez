@@ -1,0 +1,41 @@
+﻿@model EXPRACU1_CondoriGutierrez.Models.ClsAgua
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <center><b>Consumo de agua</b></center>
+        <br /><br />
+        @using (Html.BeginForm("Index", "Agua", FormMethod.Post))
+        {
+            <div class="form-group">
+
+
+                @Html.LabelFor(m => Model.litros)
+                @Html.TextBoxFor(m => Model.litros, new { @type = "number", @class = "form-control" })
+                @Html.ValidationMessageFor(m => Model.litros)
+            </div>
+            <br /><br />
+            <input type="submit" name="Calcular" value="Calcular" class="btn btn-primary" />
+        }
+
+    </div>
+    <div>
+        @if (ViewBag.Cuota != null)
+        {
+            @Html.Label("Cuota: ")
+            <p>s/.@ViewBag.Cuota</p>
+        }
+
+
+    </div>
+</body>
+</html>

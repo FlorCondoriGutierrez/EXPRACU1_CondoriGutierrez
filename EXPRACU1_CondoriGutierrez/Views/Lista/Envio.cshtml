@@ -1,0 +1,125 @@
+﻿@model EXPRACU1_CondoriGutierrez.Models.ViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Envio</title>
+</head>
+<body>
+    <div>
+
+
+        <div style="margin-left:2%;margin-top:5%">
+            @using (Html.BeginForm("Envio", "Lista", FormMethod.Post))
+            {<div style="margin-left:30%; margin-bottom:2%">
+                    Productos <input type="text" id="txt1" name="txt1" value="" />
+                    <br />
+                    <label>par lista1</label>
+                    <input type="radio" name="radio" value="lista1" /> <br />
+                    <label>par lista2</label>
+                    <input type="radio" name="radio" value="lista2" />
+                    <input type="submit" class="btn btn-success" id="btnform" name="btnform" style="width:90px;" value="Enviar" /> <br />
+
+                </div> <div id="tabla_uno">
+                    <table id="table" class="table table-bordered" width="300" cellspacing="1" cellpadding="1">
+                        <tr>
+                            <th> LISTA  1</th>
+                        </tr>
+
+                        @if (Model != null && Model.Numero1 != null)
+                        {
+                            int cont = 1;
+                            foreach (var item in Model.Numero1)
+                            {
+        <tr class="selected" id=fila@(cont++) onclick="seleccionar(this.cont)">
+            <td>
+                @Html.DisplayFor(modelitem => item.numero)
+            </td>
+        </tr>
+}
+}
+
+
+                    </table>
+
+                </div>
+                  <div id="tabla_centro">
+                   <br />
+
+                    </div>
+
+                       <div id="tabla_dos" style="margin-left:5%">
+                             <table id="table1" class="table table-bordered" style="margin-left:5%" width="300" cellspacing="1" cellpadding="1">
+                              <tr>
+                                   <th>LISTA 2</th>
+                               </tr>
+
+                                @if (Model != null && Model.Numero2 != null)
+                                  {
+                                       foreach (var item in Model.Numero2)
+                                   {
+
+                                    <tr class="selected">
+
+                                      <td>
+                                                @Html.DisplayFor(modelItem => item.numero)
+                                       </td>
+                                   </tr>
+}
+                                }
+
+                                                    </table>
+                                                </div>
+
+
+                       <button id="btnrepetidos" type="button" class="btn btn-primary">VEr Repetidos</button>
+                         <table id="table3" class="table table-bordered" width="200" cellspacing="1" cellpadding="1">
+                             <thead>
+                                    <tr>
+                                      <th>REPETIDOS</th>
+                                         </tr>
+                                           </thead>
+                                      <tbody>
+                                     </tbody>
+
+
+                                     </table>}
+
+        </div>
+</body>
+</html>
+
+
+<script>
+    $("#btnrepetidos").click(function () {
+        $.ajax({
+            url: '/Lista/Calcular/',
+            type: 'GET',
+
+            contentType: "application/json",
+            success: function (data) {
+                var rows = '';
+                $.each(data, function (i, item) {
+                    rows += "<tr>"
+                    rows += "<td>" + item.resultado + "</td>"
+                    rows += "</tr>";
+                    $("#table3 tbody").html(rows);
+                });
+            },
+            error: function (err) {
+                console.log(err.responseText);
+
+            }
+        });
+    });
+
+
+</script>
+    </div>
+</body>
+</html>
